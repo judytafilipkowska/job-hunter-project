@@ -20,7 +20,8 @@ require("./config")(app);
 
 // default value for title local
 const projectName = "JOB_HUNTER";
-const capitalized = (string) => string[0].toUpperCase() + string.slice(1).toLowerCase();
+const capitalized = (string) =>
+  string[0].toUpperCase() + string.slice(1).toLowerCase();
 
 app.locals.title = `${capitalized(projectName)} created with IronLauncher`;
 
@@ -29,7 +30,11 @@ const index = require("./routes/index");
 app.use("/", index);
 
 const authRoutes = require("./routes/auth.routes");
-app.use("/", authRoutes)
+app.use("/", authRoutes);
+
+const jobRoutes = require("./routes/job.routes");
+app.use("/", jobRoutes);
+
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
 
