@@ -1,0 +1,43 @@
+
+<form id="form" action="/signup" method="POST">
+
+   <input type="radio" id="employer" name="accountType" value="Employer">
+  <label for="employer">Employer</label><br>
+
+   
+<br>
+  <label for="username">Username</label><br>
+  <input type="text" name="username" />
+<br>
+  <label for="email">E-mail</label><br>
+  <input type="text" name="email" />
+<br>
+  <label for="password">Password</label><br>
+  <input type="password" name="password" />
+<br>
+  <label for="firstName">First name</label><br>
+  <input type="text" name="firstName" />
+<br>
+    <label for="lastName">Last name</label><br>
+  <input type="text" name="lastName" />
+<br>
+
+    <label for="companyName">Company name</label><br>
+  <input type="text" name="companyName" />
+ 
+<br>
+    <label for="location">Location</label><br>
+  <input type="text" name="location" />
+<br>
+    <label for="picture">Add picture</label><br>
+  <input type="file" name="addPicture" />
+
+<br>
+  <button type="submit">Sign up!</button>
+</form>
+
+{{! error message display: }}
+
+{{#if errorMessage}}
+  <div class="error-message">{{errorMessage}}</div>
+{{/if}}
