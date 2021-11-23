@@ -11,14 +11,14 @@ const saltRounds = 10;
 
 //ROUTES
 
-// GET  /signup form 
+// GET  /signup form
 router.get("/signup-jobseeker", (req, res) => {
-    res.render("auth/signup-form-js");
-  });
+  res.render("auth/signup-form-js");
+});
 
 router.get("/signup-employer", (req, res) => {
-   res.render("auth/signup-form");
-  });
+  res.render("auth/signup-form");
+});
 //POST /signup
 
 router.post("/signup-jobseeker", (req,res) => {
@@ -44,11 +44,10 @@ router.post("/signup-jobseeker", (req,res) => {
       if (foundUser) {
         throw new Error("The username is taken");
       }
-    
+
       return bcrypt.genSalt(saltRounds);
     })
     .then((salt) => {
- 
       return bcrypt.hash(password, salt);
     })
     .then((hashedPassword) => {
@@ -57,7 +56,6 @@ router.post("/signup-jobseeker", (req,res) => {
 
     })
     .then((createdUser) => {
-    
       res.redirect("/");
     })
     .catch((err) => {
@@ -111,22 +109,21 @@ router.post("/signup-employer", (req,res) => {
     res.render("auth/signup-form", {
       errorMessage: err.message || "Error while trying to sign up",
     });
-  });
 });
-
+})
 //login 
 
 router.get("/login", (req, res) => {
-  res.render("auth/login-form")
-})
+  res.render("auth/login-form");
+});
 
 router.post("/login", (req, res) => {
-  const {username, password} = req.body;
+  const { username, password } = req.body;
 
   const usernameNotProvided = !username || username === "";
   const passwordNotProvided = !password || password === "";
-  
-  if ( usernameNotProvided || passwordNotProvided ) {
+
+  if (usernameNotProvided || passwordNotProvided) {
     res.render("auth/login-form", {
      errorMessage: "Please provide username and/or password" 
   });
@@ -150,13 +147,29 @@ User.findOne({ username: username})
     req.session.user = user;
     res.redirect("/")
   }
+  let user;
+  User.findOne({ username: username })
+    .then((foundUser) => {
+      if (!foundUser) {
+        throw new Error("Wrong credentials");
+      }
+      return bcrypt.compare(password, foundUser.password);
+    })
+    .then((passwordCorrect) => {
+      if (!correctPassword) {
+        throw new Error("Wrong credentials");
+      } else if (passwordCorrect) {
+        req.session.user = user;
+        res.redirect("/");
+      }
+    })
+    .catch((err) => {
+      res.render("auth/login-form", {
+        errorMessage: err.message || "Provide username and password.",
+      });
+    });
+});
 })
-.catch((err) => {
-  res.render("auth/login-form", {
-    errorMessage: err.message || "Provide username and password."
-  });
-});
-});
 
 //logout
 router.get("/logout", isLoggedIn, (req, res) => {
@@ -204,7 +217,7 @@ router.post("/edit-profile", isLoggedIn, (req, res) => {
     isEmployer = true;
   } 
   
-  User.findByIdAndUpdate(user._id, {email, firstName, lastName, companyName, location}, {new :true})
+  User.findByIdAndUpdate(user._id, {email, firstName, lastName, companyName, location}, {new : true})
     .then((updatedUser) => {
       console.log(updatedUser);
       res.render("profile/my-profile", {user: updatedUser, isEmployer});
@@ -212,7 +225,8 @@ router.post("/edit-profile", isLoggedIn, (req, res) => {
     .catch ((err) => {
       res.render("profile/edit", {
         errorMessage: err.message || "Error while trying to edit",
-      });
+      })
     })
+  
 })
 module.exports = router;
