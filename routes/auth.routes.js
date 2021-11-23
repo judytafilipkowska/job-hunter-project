@@ -219,7 +219,7 @@ router.post("/edit-profile", isLoggedIn, (req, res) => {
   
   User.findByIdAndUpdate(user._id, {email, firstName, lastName, companyName, location}, {new : true})
     .then((updatedUser) => {
-      console.log(updatedUser);
+     
       res.render("profile/my-profile", {user: updatedUser, isEmployer});
     })
     .catch ((err) => {
