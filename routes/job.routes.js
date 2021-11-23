@@ -1,9 +1,18 @@
 const router = require("express").Router();
 const Job = require("../models/job.model");
+const isLoggedIn = require("../middleware/isLoggedin");
 
 //GET JOB PANEL -> needs get cause its first display of the page
-router.get("/jobs/job-panel", (req, res) => {
-  const { addedBy, position, remote, location, wage, description } = req.body;
+router.get("/jobs/job-panel", isLoggedIn, (req, res) => {
+  const {
+    addedBy,
+    position,
+    remote,
+    location,
+    wage,
+    description,
+    companyName,
+  } = req.body;
 
   Job.find()
     .then((foundedAll) => {
@@ -13,18 +22,47 @@ router.get("/jobs/job-panel", (req, res) => {
 });
 
 //GET ADD JOB
-router.get("/jobs/add-job", (req, res) => {
+router.get("/jobs/add-job", isLoggedIn, (req, res) => {
+  const user = req.session.user;
+  let isEmployer = false;
+
+  if (user.accountType === "Employer") {
+    isEmployer = true;
+  }
   res.render("jobs/add-job");
 });
 
 //POST ADD JOB
-router.post("/jobs/add-job", (req, res) => {
-  const { addedBy, position, remote, location, wage, description } = req.body;
+router.post("/jobs/add-job", isLoggedIn, (req, res) => {
+  const user = req.session.user;
+  const {
+    addedBy,
+    position,
+    remote,
+    location,
+    wage,
+    description,
+    companyName,
+  } = req.body;
+  ////////////console.log(req.body);//
+  let isEmployer = false;
 
-  Job.create({ addedBy, position, remote, location, wage, description })
+  if (user.accountType === "Employer") {
+    isEmployer = true;
+  }
+
+  Job.create({
+    addedBy,
+    position,
+    remote,
+    location,
+    wage,
+    description,
+    companyName,
+  })
     .then((createdJob) => {
       // Redirect to the page with the job details
-      res.redirect(`/jobs/job-panel/${createdJob._id}`);
+      res.redirect("/");
     })
     .catch((err) => console.log(err));
 });
@@ -43,9 +81,17 @@ router.get("/jobs/:jobId/edit-job", (req, res) => {
 //POST EDIT JOB
 router.post("/jobs/:jobId/edit-job", (req, res) => {
   const jobId = req.params.jobId;
-  const { addedBy, position, remote, location, wage, description } = req.body;
+  const {
+    addedBy,
+    position,
+    remote,
+    location,
+    wage,
+    description,
+    companyName,
+  } = req.body;
   Job.findByIdAndUpdate(
-    { addedBy, position, remote, location, wage, description },
+    { addedBy, position, remote, location, wage, description, companyName },
     { new: true }
   )
 
