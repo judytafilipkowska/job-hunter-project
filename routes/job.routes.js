@@ -5,9 +5,11 @@ const Job = require("../models/job.model");
 router.get("/jobs/job-panel", (req, res) => {
   const { addedBy, position, remote, location, wage, description } = req.body;
 
-  Job.find().then((foundedAll) => {
-    res.render("jobs/job-panel", foundedAll).catch((err) => console.log(err));
-  });
+  Job.find()
+    .then((foundedAll) => {
+      res.render("jobs/job-panel", { foundedAll });
+    })
+    .catch((err) => console.log(err));
 });
 
 //GET ADD JOB
