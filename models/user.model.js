@@ -10,8 +10,10 @@ const userSchema = new Schema(
     lastName: {type: String, required: true},
     companyName: {type: String}, 
     location: {type: String, required: true},
-    addPicture: {data: Buffer},
-    addResume: {data: Buffer}
+    addPicture: String,
+    addResume: String
+    // addPicture: {data: Buffer},
+    // addResume: {data: Buffer}
      },
   {
     timestamps: true,

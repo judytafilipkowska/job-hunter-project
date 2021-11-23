@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const User = require("../models/user.model");
 const bcrypt = require("bcryptjs");
+const fileUploader = require('../config/cloudinary.config')
 
 const isLoggedIn = require("./../middleware/isLoggedIn");
 const isEmployer = require("./../middleware/isEmployer");
@@ -21,8 +22,9 @@ router.get("/signup-employer", (req, res) => {
 });
 //POST /signup
 
-router.post("/signup-jobseeker", (req,res) => {
+router.post("/signup-jobseeker", fileUploader.any(), (req,res) => {
     const { username, password, email, firstName, lastName, location, addPicture, addResume} = req.body;
+    console.log(req.files);
 // removed accountType
     // const accountTypeNotProvided = !accountType || accountType === "" ;
     const usernameNotProvided = !username || username === "";
@@ -65,7 +67,7 @@ router.post("/signup-jobseeker", (req,res) => {
     });
 });
 
-router.post("/signup-employer", (req,res) => {
+router.post("/signup-employer", fileUploader.single("addPicture"), (req,res) => {
   const {username, password, email, firstName, lastName, companyName, location, addPicture, addResume} = req.body;
 
 
@@ -143,11 +145,14 @@ User.findOne({ username: username})
 .then((passwordCorrect) => {
   if(!passwordCorrect) {
     throw new Error("Wrong credentials");
+
   } else if (passwordCorrect) {
+    
     req.session.user = user;
+   
     res.redirect("/")
   }
-  let user;
+  
   User.findOne({ username: username })
     .then((foundUser) => {
       if (!foundUser) {
@@ -197,7 +202,7 @@ router.get("/my-profile", isLoggedIn, (req, res) => {
 })
 
 
-router.get("/edit-profile", isLoggedIn, (req, res) => {
+router.get("/edit-profile", isLoggedIn, fileUploader.single("addPicture"),(req, res) => {
   const user = req.session.user;
 
   let isEmployer = false;
@@ -207,7 +212,7 @@ router.get("/edit-profile", isLoggedIn, (req, res) => {
   res.render("profile/edit", {user, isEmployer})
 })
 
-router.post("/edit-profile", isLoggedIn, (req, res) => {
+router.post("/edit-profile", isLoggedIn, fileUploader.single("addPicture"), (req, res) => {
   const user = req.session.user;
 
   const {email, firstName, lastName, companyName, location} = req.body;
