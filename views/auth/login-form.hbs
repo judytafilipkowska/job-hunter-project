@@ -9,4 +9,6 @@
   <button type="submit">Log in</button>
 </form>
 
-</form>
+{{#if errorMessage}}
+  <div class="error-message">{{errorMessage}}</div>
+{{/if}}

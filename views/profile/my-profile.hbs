@@ -1,5 +1,33 @@
-{{#each }}
+{{!-- Job seeker profile: About section with profile pic, another for resume, applied jobs if we can manage--}}
 
-Name: {{this.firstName}}{{this.lastName}}
-Location: {{this.location}}
-{{/each}}
+
+<p>Hey there {{user.firstName}}!</p>
+
+
+{{#if isEmployer}}
+<h4>About</h4>
+
+<p>{{user.firstName}} {{user.lastName}}</p>
+<p>{{user.companyName}}</p>
+<p>{{user.location}}</p>
+
+<h4>Details</h4>
+<p>My username:{{user.username}}</p>
+<p>E-mail:{{user.email}}</p>
+
+{{else}}
+
+<h4>About</h4>
+
+<p>{{user.firstName}} {{user.lastName}}</p>
+<p>{{user.location}}</p>
+
+<h4>Details</h4>
+<p>My username:{{user.username}}</p>
+<p>E-mail:{{user.email}}</p>
+<p>Resume: {{user.addResume}}</p>
+{{/if}}
+
+
+<a href="/edit-profile">Edit profile</a>
+ <a href="/logout"> Logout</a> 
