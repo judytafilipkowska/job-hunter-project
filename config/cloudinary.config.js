@@ -15,12 +15,9 @@ const storage = new CloudinaryStorage({
   cloudinary,
   params: {
     allowed_formats: ['jpg', 'png', 'pdf'],
-    folder: 'profilePics',
-    // resource_type: 'raw' 
-    //! we can upload the image and the pdf, the path to the image is ok (on cloudinary) but the path to the pdf doesn't work
-    // DONE <3
+    folder: 'profilePics'
   }
-});
+})
 
 
 module.exports = multer({ storage });

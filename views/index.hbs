@@ -50,7 +50,18 @@
 <div class="container">
   <div class="row">
     <div class="row">
-    <div class="col-4">Here jobs</div>
+    <div class="col-4">
+      <div class=“card”>
+ {{#each foundedAll}}
+    <div class=“card-body”>
+      <h5 class=“card-title”>{{this.position}}</h5>
+      <h6 class=“card-subtitle mb-2 text-muted”>{{this.wage}}k
+      </h6>
+      <h6 class=“card-subtitle mb-2 text-muted”>{{this.location}}</h6>
+       </div>
+      {{/each}}
+    </div>
+      </div>
     <div class="col-8">
          <div id="map"></div>
            <script>

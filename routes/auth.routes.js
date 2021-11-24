@@ -22,8 +22,8 @@ router.get("/signup-employer", (req, res) => {
 //POST /signup
 
 router.post("/signup-jobseeker", fileUploader.any(), (req,res) => {
-    const { username, password, email, firstName, lastName, location, addPicture, addResume} = req.body;
-    console.log(req.files);
+    const { username, password, email, firstName, lastName, location} = req.body;
+    console.log(req.files.length);
 // removed accountType
     // const accountTypeNotProvided = !accountType || accountType === "" ;
     const usernameNotProvided = !username || username === "";
@@ -39,6 +39,25 @@ router.post("/signup-jobseeker", fileUploader.any(), (req,res) => {
         });
         return
     }
+
+    let imageUrl = 'https://www.chocolatebayou.org/wp-content/uploads/No-Image-Person-1536x1536.jpeg';
+    let resumeUrl = '';
+
+    if (req.files[0].fieldname === 'addPicture') {
+      imageUrl = req.files[0].path;
+    } 
+    if (req.files[0].fieldname === 'addResume'){
+      resumeUrl = req.files[0].path;
+    }
+
+    if (req.files.length > 1) {
+      if (req.files[1].fieldname === 'addResume'){
+        resumeUrl = req.files[1].path;
+      }
+    }
+
+
+
  
     User.findOne({ username: username })
     .then((foundUser) => {
@@ -60,8 +79,8 @@ router.post("/signup-jobseeker", fileUploader.any(), (req,res) => {
         firstName: firstName,
         lastName: lastName,
         location: location,
-        addPicture: addPicture,
-        addResume: addResume,
+        addPicture: imageUrl,
+        addResume: resumeUrl ,
       });
     })
     .then((createdUser) => {
@@ -74,9 +93,9 @@ router.post("/signup-jobseeker", fileUploader.any(), (req,res) => {
     });
 });
 
-router.post("/signup-employer", fileUploader.single("addPicture"), (req,res) => {
-  const {username, password, email, firstName, lastName, companyName, location, addPicture, addResume} = req.body;
-
+router.post("/signup-employer", fileUploader.single('addPicture'), (req,res) => {
+  const {username, password, email, firstName, lastName, companyName, location} = req.body;
+  console.log(req.file);
 
   const usernameNotProvided = !username || username === "";
   const passwordNotProvided = !password || password === "";
@@ -101,6 +120,11 @@ router.post("/signup-employer", fileUploader.single("addPicture"), (req,res) => 
     return;
   }
 
+  let imageUrl = 'https://www.chocolatebayou.org/wp-content/uploads/No-Image-Person-1536x1536.jpeg';
+  if (req.file.fieldname === 'addPicture') {
+    imageUrl = req.file.path;
+  }
+
   User.findOne({ username: username })
     .then((foundUser) => {
       if (foundUser) {
@@ -122,10 +146,11 @@ router.post("/signup-employer", fileUploader.single("addPicture"), (req,res) => 
         lastName: lastName,
         companyName: companyName,
         location: location,
-        addPicture: addPicture,
+        addPicture: imageUrl,
       });
     })
     .then((createdUser) => {
+      console.log(createdUser)
       res.redirect("/");
     })
     .catch((err) => {
@@ -155,7 +180,7 @@ router.post("/login", (req, res) => {
 let user;
 User.findOne({ username: username})
 .then ((foundUser) => {
-  user= foundUser
+  user = foundUser
   if (!foundUser) {
     throw new Error("Wrong credentials");
   }
@@ -220,7 +245,7 @@ router.get("/my-profile", isLoggedIn, (req, res) => {
   res.render("profile/my-profile", { user, isEmployer });
 });
 
-router.get("/edit-profile", isLoggedIn, fileUploader.single("addPicture"),(req, res) => {
+router.get("/edit-profile", isLoggedIn,(req, res) => {
   const user = req.session.user;
 
   let isEmployer = false;
@@ -230,19 +255,24 @@ router.get("/edit-profile", isLoggedIn, fileUploader.single("addPicture"),(req, 
   res.render("profile/edit", { user, isEmployer });
 });
 
-router.post("/edit-profile", isLoggedIn, fileUploader.single("addPicture"), (req, res) => {
+router.post("/edit-profile", isLoggedIn, fileUploader.any(), (req, res) => {
   const user = req.session.user;
 
-  const { email, firstName, lastName, companyName, location } = req.body;
+  const { email, firstName, lastName, companyName, location , addPicture, addResume } = req.body;
+  console.log(req.files);
 
   let isEmployer = false;
   if (user.accountType === "Employer") {
     isEmployer = true;
-  }
+
+    let imageUrl = user.addPicture;
+    if (req.files[0].fieldname === 'addPicture') {
+      imageUrl = req.files[0].path;
+    }
 
   User.findByIdAndUpdate(
     user._id,
-    { email, firstName, lastName, companyName, location },
+    { email, firstName, lastName, companyName, location, addPicture: imageUrl},
     { new: true }
   )
     .then((updatedUser) => {
@@ -253,6 +283,43 @@ router.post("/edit-profile", isLoggedIn, fileUploader.single("addPicture"), (req
       res.render("profile/edit", {
         errorMessage: err.message || "Error while trying to edit",
       });
+    
     });
+    
+    } else {
+
+
+      let imageUrl = user.addPicture;
+      let resumeUrl = user.addResume;
+  
+      if (req.files[0].fieldname === 'addPicture') {
+        imageUrl = req.files[0].path;
+      } 
+      if (req.files[0].fieldname === 'addResume'){
+        resumeUrl = req.files[0].path;
+      }
+  
+      if (req.files.length > 1) {
+        if (req.files[1].fieldname === 'addResume'){
+          resumeUrl = req.files[1].path;
+        }
+      }
+      User.findByIdAndUpdate(
+        user._id,
+        { email, firstName, lastName, location, addPicture: imageUrl , addResume: resumeUrl},
+        { new: true }
+      )
+        .then((updatedUser) => {
+          console.log(updatedUser);
+          res.render("profile/my-profile", { user: updatedUser });
+        })
+        .catch((err) => {
+          res.render("profile/edit", {
+            errorMessage: err.message || "Error while trying to edit",
+          });
+        
+        });
+    }
+
 });
 module.exports = router;
