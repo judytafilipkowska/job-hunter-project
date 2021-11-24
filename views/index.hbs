@@ -1,9 +1,29 @@
 <h1>{{title}} 🚀</h1>
 <p>Welcome to the Job board for casual work opportunities!</p>
-<p>Join us today!</p>
-<a href="/signup-jobseeker">I am looking for a job</a>
-<a href="/signup-employer">I am looking for employees</a>
-<br>
-<p>You are our user already? <a href="/login">Click here!</a>
-<p>Check your <a href="/my-profile" >profile</a> </p>
+{{#if isNotLogged}}
+    <p>Join us today!</p>
+    <a href="/signup-jobseeker">I am looking for a job</a>
+    <a href="/signup-employer">I am looking for employees</a>
+    <br>
+    <p>You are our user already? <a href="/login">Click here!</a>
+{{/if}}
 
+{{#if isEmployer}}
+    <a href="/jobs/add-job">Add job</a>
+{{/if}}
+
+<p>Check your <a href="/my-profile" >profile</a> </p>
+{{#each foundedAll}}
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">{{this.position}}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">{{this.wage}}k
+      </h6>
+      <h6 class="card-subtitle mb-2 text-muted">{{this.location}}</h6>
+      {{#if this.remote}}
+        <h6 class="card-subtitle mb-2 text-muted">Remote</h6>
+      {{/if}}
+      <a href="/jobs/{{this._id}}/details" class="btn btn-primary">Details</a>
+    </div>
+  </div>
+{{/each}}

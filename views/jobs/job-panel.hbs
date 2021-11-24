@@ -1,13 +1,20 @@
 <h2>JOB FUCKINNNN PANEL </h2>
 
 {{#each foundedAll}}
-
-  <div style="border: 1px solid black; padding: 20px">
-
-    <p>{{this.position}}</p>
-    <p>{{this.location}}</p>
-    <p>{{this.wage}}</p>
-
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">{{this.position}}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">{{this.wage}}k
+      </h6>
+      <h6 class="card-subtitle mb-2 text-muted">{{this.location}}</h6>
+      {{#if this.remote}}
+        <h6 class="card-subtitle mb-2 text-muted">Remote</h6>
+      {{/if}}
+      <a href="/jobs/{{this._id}}/details" class="btn btn-primary">Details</a>
+      <a href="/jobs/{{this._id}}/edit-job" class="btn btn-primary">Edit</a>
+    </div>
+  </div>
 {{/each}}
+
 
 

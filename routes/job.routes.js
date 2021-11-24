@@ -1,58 +1,38 @@
 const router = require("express").Router();
 const Job = require("../models/job.model");
 const isLoggedIn = require("../middleware/isLoggedin");
+const isEmployer = require("../middleware/isEmployer");
 
 //GET JOB PANEL -> needs get cause its first display of the page
-router.get("/jobs/job-panel", isLoggedIn, (req, res) => {
-  const {
-    addedBy,
-    position,
-    remote,
-    location,
-    wage,
-    description,
-    companyName,
-  } = req.body;
-
-  Job.find()
+router.get("/jobs/job-panel", isLoggedIn, isEmployer, (req, res) => {
+  const { user } = req.session;
+  Job.find({ addedBy: user._id })
     .then((foundedAll) => {
+      console.log(foundedAll);
       res.render("jobs/job-panel", { foundedAll });
     })
     .catch((err) => console.log(err));
 });
 
 //GET ADD JOB
-router.get("/jobs/add-job", isLoggedIn, (req, res) => {
-  const user = req.session.user;
+router.get("/jobs/add-job", isLoggedIn, isEmployer, (req, res) => {
+  /*   const user = req.session.user;
   let isEmployer = false;
 
   if (user.accountType === "Employer") {
     isEmployer = true;
-  }
+  } */
   res.render("jobs/add-job");
 });
 
 //POST ADD JOB
 router.post("/jobs/add-job", isLoggedIn, (req, res) => {
   const user = req.session.user;
-  const {
-    addedBy,
-    position,
-    remote,
-    location,
-    wage,
-    description,
-    companyName,
-  } = req.body;
-  ////////////console.log(req.body);//
-  let isEmployer = false;
-
-  if (user.accountType === "Employer") {
-    isEmployer = true;
-  }
+  const { position, remote, location, wage, description, companyName } =
+    req.body;
 
   Job.create({
-    addedBy,
+    addedBy: user._id,
     position,
     remote,
     location,
@@ -67,13 +47,24 @@ router.post("/jobs/add-job", isLoggedIn, (req, res) => {
     .catch((err) => console.log(err));
 });
 
+router.get("/jobs/:jobId/details", (req, res) => {
+  const jobId = req.params.jobId;
+
+  Job.findById(jobId)
+    .then((job) => {
+      res.render("jobs/job-detail", { job: job });
+    })
+    .catch((err) => console.log(err));
+});
+
 //GET EDIT JOB
 router.get("/jobs/:jobId/edit-job", (req, res) => {
   const jobId = req.params.jobId;
 
   Job.findById(jobId)
-    .then((jobs) => {
-      res.render("jobs/edit-job", { editedJobs: jobs });
+    .then((job) => {
+      console.log(job);
+      res.render("jobs/edit-job", { editedJob: job });
     })
     .catch((err) => console.log(err));
 });

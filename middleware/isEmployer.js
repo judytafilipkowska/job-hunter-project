@@ -1,6 +1,8 @@
 function isEmployer(req, res, next) {
-    if(req.user.accountType === "Employer") next();
-    else res.redirect('/login');
+  if (req.session.user.accountType !== "Employer") {
+    return res.redirect("/");
+  }
+  next();
 }
 
 module.exports = isEmployer;
