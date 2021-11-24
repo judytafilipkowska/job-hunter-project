@@ -21,7 +21,6 @@ router.get("/signup-employer", (req, res) => {
 });
 //POST /signup
 
-<<<<<<< HEAD
 router.post("/signup-jobseeker", fileUploader.any(), (req,res) => {
     const { username, password, email, firstName, lastName, location, addPicture, addResume} = req.body;
     console.log(req.files);
@@ -42,43 +41,6 @@ router.post("/signup-jobseeker", fileUploader.any(), (req,res) => {
     }
  
     User.findOne({ username: username })
-=======
-router.post("/signup-jobseeker", (req, res) => {
-  const {
-    username,
-    password,
-    email,
-    firstName,
-    lastName,
-    location,
-    addPicture,
-    addResume,
-  } = req.body;
-  // removed accountType
-  // const accountTypeNotProvided = !accountType || accountType === "" ;
-  const usernameNotProvided = !username || username === "";
-  const passwordNotProvided = !password || password === "";
-  const emailNotProvided = !email || email === "";
-  const firstNameNotProvided = !firstName || firstName === "";
-  const lastNameNotProvided = !lastName || lastName === "";
-  const locationNotProvided = !location || location === "";
-
-  if (
-    usernameNotProvided ||
-    passwordNotProvided ||
-    emailNotProvided ||
-    firstNameNotProvided ||
-    lastNameNotProvided ||
-    locationNotProvided
-  ) {
-    res.render("auth/signup-form-js", {
-      errorMessage: "Please provide required information",
-    });
-    return;
-  }
-
-  User.findOne({ username: username })
->>>>>>> 98a11d7e686b5ea58ba574277c0e97310f82d4d4
     .then((foundUser) => {
       if (foundUser) {
         throw new Error("The username is taken");
@@ -112,24 +74,9 @@ router.post("/signup-jobseeker", (req, res) => {
     });
 });
 
-<<<<<<< HEAD
 router.post("/signup-employer", fileUploader.single("addPicture"), (req,res) => {
   const {username, password, email, firstName, lastName, companyName, location, addPicture, addResume} = req.body;
 
-=======
-router.post("/signup-employer", (req, res) => {
-  const {
-    username,
-    password,
-    email,
-    firstName,
-    lastName,
-    companyName,
-    location,
-    addPicture,
-    addResume,
-  } = req.body;
->>>>>>> 98a11d7e686b5ea58ba574277c0e97310f82d4d4
 
   const usernameNotProvided = !username || username === "";
   const passwordNotProvided = !password || password === "";
@@ -201,13 +148,10 @@ router.post("/login", (req, res) => {
 
   if (usernameNotProvided || passwordNotProvided) {
     res.render("auth/login-form", {
-<<<<<<< HEAD
      errorMessage: "Please provide username and/or password" 
   });
   return
-}
-
-
+} 
 let user;
 User.findOne({ username: username})
 .then ((foundUser) => {
@@ -228,14 +172,6 @@ User.findOne({ username: username})
     res.redirect("/")
   }
   
-=======
-      errorMessage: "Please provide username and/or password",
-    });
-    return;
-  }
-
-  let user;
->>>>>>> 98a11d7e686b5ea58ba574277c0e97310f82d4d4
   User.findOne({ username: username })
     .then((foundUser) => {
       user = foundUser;
@@ -258,6 +194,7 @@ User.findOne({ username: username})
       });
     });
 });
+});
 
 //logout
 router.get("/logout", isLoggedIn, (req, res) => {
@@ -268,7 +205,7 @@ router.get("/logout", isLoggedIn, (req, res) => {
     res.redirect("/");
   });
   console.log(req.session);
-});
+})
 
 router.get("/my-profile", isLoggedIn, (req, res) => {
   const user = req.session.user;
@@ -309,13 +246,8 @@ router.post("/edit-profile", isLoggedIn, fileUploader.single("addPicture"), (req
     { new: true }
   )
     .then((updatedUser) => {
-<<<<<<< HEAD
       console.log(updatedUser);
       res.render("profile/my-profile", { user: updatedUser, isEmployer });
-=======
-     
-      res.render("profile/my-profile", {user: updatedUser, isEmployer});
->>>>>>> 66d6f712108eddd167461379f7f26f2ba58d35c2
     })
     .catch((err) => {
       res.render("profile/edit", {
