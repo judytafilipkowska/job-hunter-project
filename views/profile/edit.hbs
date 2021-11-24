@@ -10,12 +10,26 @@
 
 
 {{#if isEmployer}}
-   <label for="companyName">Company name</label><br>
+  <label for="firstName">First name</label><br>
+  <input type="text" name="firstName" value="{{user.firstName}}"/>
+<br>
+    <label for="lastName">Last name</label><br>
+  <input type="text" name="lastName" value="{{user.lastName}}"/>
+<br>
+ <label for="companyName">Company name</label><br>
   <input type="text" name="companyName" value="{{user.companyName}}"/>
 <br>
-{{/if}}
+    <label for="location">Location</label><br>
+  <input type="text" name="location" value="{{user.location}}"/>
+<br>
+    <label for="picture">Update picture</label><br>
+  <input type="file" name="addPicture"/>
+<br>
 
-  <label for="firstName">First name</label><br>
+
+{{else}}
+
+<label for="firstName">First name</label><br>
   <input type="text" name="firstName" value="{{user.firstName}}"/>
 <br>
     <label for="lastName">Last name</label><br>
@@ -27,12 +41,11 @@
     <label for="picture">Update picture</label><br>
   <input type="file" name="addPicture" />
 <br>
- 
     <label for="resume">Update your resume</label><br>
   <input type="file" name="addResume"/>
 <br>
-
-  <button type="submit">Save</button>
+{{/if}}
+<button type="submit" class="btn btn-outline-secondary">Save</button>
 </form>
 
 {{! error message display: }}

@@ -11,50 +11,64 @@
 <body>
 
 <main>
-<div class="row">
-    <div class="col">
-<p>Hey there {{user.firstName}}!</p>
-    </div>
-</div>
-
 
 
 <div class="container">
   <div class="row">
     <div class="col">
      {{#if isEmployer}}
-<h4>About</h4>
+<div class="card" style="width: 25rem;">
+   <div class="card-header">
+    About
+  </div>
+  <img src= {{user.addPicture}} alt="profile-pic" />
+  <div class="card-body">
+    <h5 class="card-text">{{user.firstName}} {{user.lastName}}</h5>
+    <h6 class="card-text">{{user.companyName}}</h6>
+    <p>{{user.location}}</p>
+  </div>
+</div>
 
-<p>{{user.firstName}} {{user.lastName}}</p>
-<p>{{user.companyName}}</p>
-<p>{{user.location}}</p>
 
 {{else}}
 
-<h4>About</h4>
+<div class="card" style="width: 25rem;">
+    <div class="card-header">
+    About
+  </div>
+  <img src= {{user.addPicture}} alt="profile-pic" />
+  <div class="card-body">
+    <h5 class="card-text">{{user.firstName}} {{user.lastName}}</h5>
+    <p>{{user.location}}</p>
+  </div>
+</div>
 
+{{!--
+<img src= {{user.addPicture}} alt="profile-pic" />
 <p>{{user.firstName}} {{user.lastName}}</p>
-<p>{{user.location}}</p>
+<p>{{user.location}}</p>--}}
 
 {{/if}}
 
     </div>
     <div class="col">
 
-        {{#if isEmployer}}
-<h4>Details</h4>
-<p>My username:{{user.username}}</p>
-<p>E-mail:{{user.email}}</p>
-<p> <a href="/jobs/job-panel/" class="btn btn-primary">My job panel </a> </p>
+<div class="card" style="width: 25rem;">
+  <div class="card-header">
+    Details
+  </div>
+  <ul class="list-group list-group-flush">
+      {{#if isEmployer}}
+    <li class="list-group-item">My username:{{user.username}}</li>
+    <li class="list-group-item">E-mail:{{user.email}}</li>
+      {{else}}
+    <li class="list-group-item">My username:{{user.username}}</li>
+    <li class="list-group-item">E-mail:{{user.email}}</li> 
+    <li class="list-group-item">Resume: {{user.addResume}}</li> 
+    {{/if}}
+  </ul>
+</div>
 
-{{else}}
-
-
-<h4>Details</h4>
-<p>My username: {{user.username}}</p>
-<p>E-mail: {{user.email}}</p>
-<p>Resume: {{user.addResume}}</p>
-{{/if}}
     </div>
   </div>
   <div class="row">
