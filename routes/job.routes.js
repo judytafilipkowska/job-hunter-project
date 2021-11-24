@@ -47,17 +47,21 @@ router.post("/jobs/add-job", isLoggedIn, (req, res) => {
     .catch((err) => console.log(err));
 });
 
-router.get("/jobs/:jobId/details", (req, res) => {
+router.get("/jobs/:jobId/details", isLoggedIn, (req, res) => {
   const jobId = req.params.jobId;
+  const { user } = req.session;
+  console.log(user.accountType);
   let isJobSeeker = false;
 
   if (user.accountType === "Job seeker") {
-    isEmployer = true;
+    isJobSeeker = true;
   }
+  // let isJobSeeker = user?.req.session === "job seeker";
 
   Job.findById(jobId)
     .then((job) => {
-      res.render("jobs/job-detail", isJobSeeker, { job: job });
+      console.log(isJobSeeker);
+      res.render("jobs/job-detail", { job, isJobSeeker });
     })
     .catch((err) => console.log(err));
 });

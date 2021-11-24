@@ -186,13 +186,15 @@ router.post("/login", (req, res) => {
     .then((foundUser) => {
       user = foundUser;
       if (!foundUser) {
-        throw new Error("Wrong credentials");
+        res.render("auth/login-form", { errorMessage: "Wrong credentials" });
+        return;
+        // throw new Error("Wrong credentials");
       }
       return bcrypt.compare(password, foundUser.password);
     })
     .then((passwordCorrect) => {
       if (!passwordCorrect) {
-        throw new Error("Wrong credentials");
+        res.render("auth/login-form", { errorMessage: "Wrong credentials" });
       } else if (passwordCorrect) {
         req.session.user = user;
 
@@ -203,13 +205,19 @@ router.post("/login", (req, res) => {
         .then((foundUser) => {
           user = foundUser;
           if (!foundUser) {
-            throw new Error("Wrong credentials");
+            res.render("auth/login-form", {
+              errorMessage: "Wrong credentials",
+            });
+            return;
           }
           return bcrypt.compare(password, foundUser.password);
         })
         .then((passwordCorrect) => {
           if (!passwordCorrect) {
-            throw new Error("Wrong credentials");
+            res.render("auth/login-form", {
+              errorMessage: "Wrong credentials",
+            });
+            return;
           } else if (passwordCorrect) {
             req.session.user = user;
             res.redirect("/");
@@ -245,6 +253,12 @@ router.get("/my-profile", isLoggedIn, (req, res) => {
 
   console.log(user);
   res.render("profile/my-profile", { user, isEmployer });
+});
+
+router.get("/application-success", isLoggedIn, (req, res) => {
+  res.render("profile/applied", {
+    message: "Thank you!, your application is on the way",
+  });
 });
 
 router.get(
