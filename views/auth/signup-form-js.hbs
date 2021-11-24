@@ -44,10 +44,6 @@
 </nav> 
 <main>
 <form id="form" action="/signup-jobseeker" method="POST" enctype="multipart/form-data">
-
-  {{!-- <input type="radio" id="job_seeker" name="accountType" value="Job_seeker">
-  <label for="job_seeker">Job seeker</label> --}}
-
    
  <div class="form-floating mb-3">
   <input type="text"  name="username" class="form-control" id="floatingInput" placeholder="username">
@@ -73,13 +69,13 @@
   <input type="text" name="location" class="form-control" id="floatingInput" placeholder="location">
   <label for="location" >Location</label>
 </div>
-<div class="form-floating mb-3">
-  <input type="file" name="addPicture" class="form-control" id="floatingInput" placeholder="addPicture">
-  <label for="picture"> Add picture</label>
+<div class="mb-3">
+  <label for="formFile"  name="addPicture"  class="form-label">Add picture</label>
+  <input class="form-control" type="file" id="formFile">
 </div>
-<div class="form-floating mb-3">
-  <input type="file" name="addResume" class="form-control" id="floatingInput" placeholder="addResume">
-  <label for="file"> Add resume</label>
+<div class="mb-3">
+  <label for="formFile"  name="addResume"  class="form-label">Add resume</label>
+  <input class="form-control" type="file" id="formFile">
 </div>
   
  <button type="submit" class="btn btn-outline-secondary">Sign up</button>
@@ -95,39 +91,4 @@
 </body>
 </hbs>
 
-
-
-
-
-
-
-{{!-- 
-  <label for="picture">Add picture</label><br>
-  <input type="file" name="addPicture" />
-<br>
- 
-    <label for="resume">Add your resume</label><br>
-  <input type="file" name="addResume" />
-
-<br>
- <label for="lastName">Last name</label><br>
-  <input type="text" name="lastName" />
-<br>
-    <label for="location">Location</label><br>
-  <input type="text" name="location" />
-<br>
-<br>
-  <label for="username">Username</label><br>
-  <input type="text" name="username" /> 
-<br>
-  <label for="email">E-mail</label><br>
-  <input type="text" name="email" />
-<br> 
-  <label for="password">Password</label><br>
-  <input type="password" name="password" />
-<br> 
-  <label for="firstName">First name</label><br>
-  <input type="text" name="firstName" />
-<br>--}}
-  
 
