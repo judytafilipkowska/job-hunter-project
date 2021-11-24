@@ -49,10 +49,15 @@ router.post("/jobs/add-job", isLoggedIn, (req, res) => {
 
 router.get("/jobs/:jobId/details", (req, res) => {
   const jobId = req.params.jobId;
+  let isJobSeeker = false;
+
+  if (user.accountType === "Job seeker") {
+    isEmployer = true;
+  }
 
   Job.findById(jobId)
     .then((job) => {
-      res.render("jobs/job-detail", { job: job });
+      res.render("jobs/job-detail", isJobSeeker, { job: job });
     })
     .catch((err) => console.log(err));
 });
