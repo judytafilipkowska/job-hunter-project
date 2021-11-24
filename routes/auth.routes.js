@@ -266,77 +266,36 @@ router.post("/login", (req, res) => {
     });
     return;
   }
-  let user;
+
   User.findOne({ username: username })
     .then((foundUser) => {
       user = foundUser;
       if (!foundUser) {
-        throw new Error("Wrong credentials");
+        res.render("auth/login-form", {
+          errorMessage: "Wrong credentials",
+        });
+        return;
       }
       return bcrypt.compare(password, foundUser.password);
     })
     .then((passwordCorrect) => {
       if (!passwordCorrect) {
-        throw new Error("Wrong credentials");
+        res.render("auth/login-form", {
+          errorMessage: "Wrong credentials",
+        });
+        return;
       } else if (passwordCorrect) {
         req.session.user = user;
-
         res.redirect("/");
       }
-      let user;
-      User.findOne({ username: username })
-        .then((foundUser) => {
-          user = foundUser;
-          if (!foundUser) {
-            res.render("auth/login-form", {
-              errorMessage: "Wrong credentials",
-            });
-            return;
-            // throw new Error("Wrong credentials");
-          }
-          return bcrypt.compare(password, foundUser.password);
-        })
-        .then((passwordCorrect) => {
-          if (!passwordCorrect) {
-            res.render("auth/login-form", {
-              errorMessage: "Wrong credentials",
-            });
-          } else if (passwordCorrect) {
-            req.session.user = user;
-
-            res.redirect("/");
-          }
-
-          User.findOne({ username: username })
-            .then((foundUser) => {
-              user = foundUser;
-              if (!foundUser) {
-                res.render("auth/login-form", {
-                  errorMessage: "Wrong credentials",
-                });
-                return;
-              }
-              return bcrypt.compare(password, foundUser.password);
-            })
-            .then((passwordCorrect) => {
-              if (!passwordCorrect) {
-                res.render("auth/login-form", {
-                  errorMessage: "Wrong credentials",
-                });
-                return;
-              } else if (passwordCorrect) {
-                req.session.user = user;
-                res.redirect("/");
-              }
-            })
-            .catch((err) => {
-              res.render("auth/login-form", {
-                errorMessage: err.message || "Provide username and password.",
-              });
-            });
-        });
+    })
+    .catch((err) => {
+      res.render("auth/login-form", {
+        errorMessage: err.message || "Provide username and password.",
+      });
     });
 });
+
 //logout
 router.get("/logout", isLoggedIn, (req, res) => {
   req.session.destroy((err) => {
