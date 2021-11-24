@@ -250,13 +250,7 @@ router.post("/edit-profile", isLoggedIn, (req, res) => {
     { new: true }
   )
     .then((updatedUser) => {
-<<<<<<< HEAD
-      console.log(updatedUser);
       res.render("profile/my-profile", { user: updatedUser, isEmployer });
-=======
-     
-      res.render("profile/my-profile", {user: updatedUser, isEmployer});
->>>>>>> 66d6f712108eddd167461379f7f26f2ba58d35c2
     })
     .catch((err) => {
       res.render("profile/edit", {

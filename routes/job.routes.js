@@ -49,6 +49,7 @@ router.post("/jobs/add-job", isLoggedIn, (req, res) => {
 
 router.get("/jobs/:jobId/details", (req, res) => {
   const jobId = req.params.jobId;
+  //let //userLogged""" = user === req.session//
 
   Job.findById(jobId)
     .then((job) => {
