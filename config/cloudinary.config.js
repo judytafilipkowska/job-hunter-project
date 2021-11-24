@@ -18,6 +18,7 @@ const storage = new CloudinaryStorage({
     folder: 'profilePics',
     // resource_type: 'raw' 
     //! we can upload the image and the pdf, the path to the image is ok (on cloudinary) but the path to the pdf doesn't work
+    // DONE <3
   }
 });
 
