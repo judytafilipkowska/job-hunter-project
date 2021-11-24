@@ -1,6 +1,6 @@
 <p>Edit your profile</p>
 
-<form id="form" action="/edit-profile" method="POST">
+<form id="form" action="/edit-profile" method="POST" enctype="multipart/form-data">
  <label for="email">E-mail</label><br>
   <input type="text" name="email" value="{{user.email}}"/>
 <br>
