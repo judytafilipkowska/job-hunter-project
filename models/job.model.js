@@ -8,6 +8,7 @@ const jobSchema = new Schema(
     location: { type: String, required: true },
     wage: { type: Number, required: true },
     description: { type: String, required: true },
+    companyName: { type: String },
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
