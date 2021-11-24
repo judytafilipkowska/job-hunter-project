@@ -1,0 +1,37 @@
+
+
+<form action="/jobs/add-job" method="POST">
+  <br />
+  <label>Position:</label>
+  <input type="text" name="position" value="{{editedJob.position}}"/>
+  <br/>
+
+  <label>Company name :</label>
+  <input type="text" name="companyName" />
+
+  <br />
+  <label>Location:</label>
+  <input type="text" name="location" />
+
+  <br />
+  <label>Wage: </label>
+  <input type="number" name="wage" />
+
+  <br />
+ 
+   <br />
+  <label>Description: </label>
+  <input type="text" name="description"/>
+
+   <br/>
+ <P>Remote</P>
+ <input type="radio" id="true" name="remote" value="true">
+  <label for="true">true</label>
+ <input type="radio" id="false" name="remote" value="false">
+  <label for="false">false</label>
+
+  <br />
+  <button type="submit">Add a job</button>
+ 
+</form>
+

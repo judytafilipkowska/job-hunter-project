@@ -1,0 +1,42 @@
+<p>Edit your profile</p>
+
+<form id="form" action="/edit-profile" method="POST">
+ <label for="email">E-mail</label><br>
+  <input type="text" name="email" value="{{user.email}}"/>
+<br>
+  {{!-- <label for="password">Password</label><br>
+  <input type="password" name="password" value="{{user.email}}"/>
+<br> --}}
+
+
+{{#if isEmployer}}
+   <label for="companyName">Company name</label><br>
+  <input type="text" name="companyName" value="{{user.companyName}}"/>
+<br>
+{{/if}}
+
+  <label for="firstName">First name</label><br>
+  <input type="text" name="firstName" value="{{user.firstName}}"/>
+<br>
+    <label for="lastName">Last name</label><br>
+  <input type="text" name="lastName" value="{{user.lastName}}"/>
+<br>
+    <label for="location">Location</label><br>
+  <input type="text" name="location" value="{{user.location}}"/>
+<br>
+    <label for="picture">Update picture</label><br>
+  <input type="file" name="addPicture" />
+<br>
+ 
+    <label for="resume">Update your resume</label><br>
+  <input type="file" name="addResume"/>
+<br>
+
+  <button type="submit">Save</button>
+</form>
+
+{{! error message display: }}
+
+{{#if errorMessage}}
+  <div class="error-message">{{errorMessage}}</div>
+{{/if}}

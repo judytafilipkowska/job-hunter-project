@@ -1,83 +1,93 @@
 const router = require("express").Router();
 const Job = require("../models/job.model");
+const isLoggedIn = require("../middleware/isLoggedin");
+const isEmployer = require("../middleware/isEmployer");
 
-//Routes
-
-//GET panel job
-router.get("/jobs/job-panel", (req, res) => {
-  res.render("jobs/job-panel");
-});
-
-//POST panel JOB
-
-router.post("/jobs/job-panel", (req, res) => {
-  const { addedBy, position, remote, location, wage, description } = req.body;
-
-  Job.find()
-    .then((findedAll) => {
-      res.render("jobs/job-panel", findedAll);
+//GET JOB PANEL -> needs get cause its first display of the page
+router.get("/jobs/job-panel", isLoggedIn, isEmployer, (req, res) => {
+  const { user } = req.session;
+  Job.find({ addedBy: user._id })
+    .then((foundedAll) => {
+      console.log(foundedAll);
+      res.render("jobs/job-panel", { foundedAll });
     })
     .catch((err) => console.log(err));
 });
 
-//GET ADD-JOB
+//GET ADD JOB
+router.get("/jobs/add-job", isLoggedIn, isEmployer, (req, res) => {
+  /*   const user = req.session.user;
+  let isEmployer = false;
 
-router.get("/jobs/add-job", (req, res) => {
+  if (user.accountType === "Employer") {
+    isEmployer = true;
+  } */
   res.render("jobs/add-job");
 });
 
-//POST add-job
-router.post("/jobs/add-job", (req, res) => {
-  const { addedBy, position, remote, location, wage, description } = req.body;
+//POST ADD JOB
+router.post("/jobs/add-job", isLoggedIn, (req, res) => {
+  const user = req.session.user;
+  const { position, remote, location, wage, description, companyName } =
+    req.body;
 
   Job.create({
+    addedBy: user._id,
+    position,
+    remote,
+    location,
+    wage,
+    description,
+    companyName,
+  })
+    .then((createdJob) => {
+      // Redirect to the page with the job details
+      res.redirect("/");
+    })
+    .catch((err) => console.log(err));
+});
+
+router.get("/jobs/:jobId/details", (req, res) => {
+  const jobId = req.params.jobId;
+
+  Job.findById(jobId)
+    .then((job) => {
+      res.render("jobs/job-detail", { job: job });
+    })
+    .catch((err) => console.log(err));
+});
+
+//GET EDIT JOB
+router.get("/jobs/:jobId/edit-job", (req, res) => {
+  const jobId = req.params.jobId;
+
+  Job.findById(jobId)
+    .then((job) => {
+      console.log(job);
+      res.render("jobs/edit-job", { editedJob: job });
+    })
+    .catch((err) => console.log(err));
+});
+
+//POST EDIT JOB
+router.post("/jobs/:jobId/edit-job", (req, res) => {
+  const jobId = req.params.jobId;
+  const {
     addedBy,
     position,
     remote,
     location,
     wage,
     description,
-  })
-
-    .then((createdJob) => {
-      // Redirect to the page with the job details
-      res.redirect(`/jobs/job-panel/${createdJob._id}`);
-    })
-    .catch((err) => console.log(err));
-});
-
-//GET edit-job
-
-router.get("/jobs/:jobId/edit-job", (req, res) => {
-  const jobId = req.params.jobId;
-
-  Job.findById(jobId)
-    .then((jobs) => {
-      res.render("jobs/edit-job", { editedJob: jobs });
-    })
-    .catch((err) => console.log(err));
-});
-
-//Post edit-job
-// POST
-router.post("/jobs/:jobId/edit", (req, res) => {
-  const jobId = req.params.jobId;
-  const { addedBy, position, remote, location, wage, description } = req.body;
-
+    companyName,
+  } = req.body;
   Job.findByIdAndUpdate(
-    jobId,
-    {
-      addedBy,
-      position,
-      remote,
-      location,
-      wage,
-      description,
-    },
+    { addedBy, position, remote, location, wage, description, companyName },
     { new: true }
   )
+
     .then((updatedJob) => {
-      res.redirect(`/jobs/job-panel/${jobId}`);
+      res.redirect(`/jobs/details-job/${jobId}`);
     })
     .catch((err) => console.log(err));
 });
