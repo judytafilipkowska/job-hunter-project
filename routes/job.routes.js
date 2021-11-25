@@ -2,6 +2,7 @@ const router = require("express").Router();
 const Job = require("../models/job.model");
 const isLoggedIn = require("../middleware/isLoggedin");
 const isEmployer = require("../middleware/isEmployer");
+const isJobSeeker = require("../middleware/isJobSeeker");
 
 //GET JOB PANEL -> needs get cause its first display of the page
 router.get("/jobs/job-panel", isLoggedIn, isEmployer, (req, res) => {
@@ -10,6 +11,17 @@ router.get("/jobs/job-panel", isLoggedIn, isEmployer, (req, res) => {
     .then((foundedAll) => {
       console.log(foundedAll);
       res.render("jobs/job-panel", { foundedAll });
+    })
+    .catch((err) => console.log(err));
+});
+
+//GET APPLIED JOBS
+
+router.get("/jobs/applied-jobs", isLoggedIn, isJobSeeker, (req, res) => {
+  const { user } = req.session;
+  Job.find({ appliedBy: user._id })
+    .then((appliedJobs) => {
+      res.render("jobs/applied-jobs", { appliedJobs });
     })
     .catch((err) => console.log(err));
 });

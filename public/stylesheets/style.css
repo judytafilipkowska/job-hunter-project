@@ -1,7 +1,38 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+
+
+footer {
+  width:99vw;
+
+  top:95vh;
 }
+body {
+
+   padding-left: 5px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+ 
+}
+
+
+.navbar  {
+  height:100px;
+}
+
+.containerIMG {
+  margin-right: 35px;
+  background-color: peru;
+  border-radius: 50px;
+
+}
+
+#img {
+
+border-bottom-left-radius: 50px;
+border-top-left-radius: 50px;
+width: 50%;
+height: 30%;
+
+}
+
 
 a {
   color: #00b7ff;
@@ -35,3 +66,11 @@ cursor: pointer;
   text-align: center;
   font-family: 'Open Sans', sans-serif;
 }
+.job-detail{
+  width: 50%;
+  margin:auto;
+  margin-bottom: 5px;
+  text-align:justify;
+}
+
+

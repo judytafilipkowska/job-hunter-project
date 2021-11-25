@@ -81,9 +81,36 @@
   <label>Location(<i>Please provide address and city</i>):</label>
   <input type="text" name="address" />
 
-  <br />
-  <label>Wage: </label>
-  <input type="number" name="wage" />
+  <div class="form-floating mb-3" style="width: 25rem;">
+    <input
+      type="text"
+      name="location"
+      class="form-control"
+      id="floatingInput"
+      placeholder="Location"
+    />
+    <label for="firstName"></label>
+  </div>
+  <div class="form-floating mb-3" style="width: 25rem;">
+    <input
+      type="text"
+      name="description"
+      class="form-control"
+      id="floatingInput"
+      placeholder="Description"
+    />
+    <label for="lastName"></label>
+  </div>
+  <div class="form-floating mb-3" style="width: 25rem;">
+    <input
+      type="text"
+      name="companyName"
+      class="form-control"
+      id="floatingInput"
+      placeholder="Company name"
+    />
+    <label for="companyName"></label>
+  </div>
 
   <br />
  
@@ -91,12 +118,13 @@
   <label>Description: </label>
   <input type="text" name="description" />
 
-   <br/>
- <P>Remote</P>
- <input type="radio" id="true" name="remote" value="true">
-  <label for="true">true</label>
- <input type="radio" id="false" name="remote" value="false">
-  <label for="false">false</label>
+    <P>Remote</P>
+    <input type="radio" id="true" name="remote" value="true" />
+     
+    <label for="true">true</label>
+    <input type="radio" id="false" name="remote" value="false" />
+     
+    <label for="false">false</label>
 
   <br />
   <button type="submit">Add a job</button>

@@ -3,6 +3,7 @@ const geocoder = require('../utils/geocoder');
 const jobSchema = new Schema(
   {
     addedBy: { type: Schema.Types.ObjectId, ref: "User" },
+    appliedBy: [{ type: Schema.Types.ObjectId, ref: "User" }],
     position: { type: String, required: true },
     remote: { type: Boolean, required: true },
     wage: { type: Number, required: true },

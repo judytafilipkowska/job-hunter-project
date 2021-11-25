@@ -1,24 +1,21 @@
+<div class="job-detail" >
+<br>
+Position: {{job.position}}
+<hr />
+Remote
+<hr />
+Location: {{job.location}}
+<hr />
+<Salary: {{job.wage}}€
+<hr>
+Description: {{job.description}}
+<hr />
 
-<li>Position: {{job.position}}</li>
-<li>Remote: {{job.remote}}</li>
-<li>Location: {{job.location}}</li>
-<li>Salary: {{job.wage}}</li>
-<li>Description: {{job.description}}</li>
+Company: {{job.companyName}}
+<hr>
 
-<li>Company: {{job.companyName}}</li>
+{{#if isJobSeeker}}
+  <a href="/application-success" class="btn btn-secondary">I want to Apply</a>
+{{/if}}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</div>

@@ -151,10 +151,10 @@ router.post("/signup-employer", fileUploader.single('addPicture'), (req, res) =>
         companyName: companyName,
         location: location,
         addPicture: imageUrl,
+        addResume: resumeUrl,
       });
     })
     .then((createdUser) => {
-      console.log(createdUser)
       res.redirect("/");
     })
     .catch((err) => {
@@ -187,7 +187,10 @@ router.post("/login", (req, res) => {
     .then((foundUser) => {
       user = foundUser
       if (!foundUser) {
-        throw new Error("Wrong credentials");
+        res.render("auth/login-form", {
+          errorMessage: "Wrong credentials",
+        });
+        return;
       }
       return bcrypt.compare(password, foundUser.password);
     })
@@ -230,6 +233,12 @@ router.get("/my-profile", isLoggedIn, (req, res) => {
 
   console.log(user);
   res.render("profile/my-profile", { user, isEmployer });
+});
+
+router.get("/application-success", isLoggedIn, (req, res) => {
+  res.render("profile/applied", {
+    message: "Thank you! your application is on the way",
+  });
 });
 
 router.get("/edit-profile", isLoggedIn, (req, res) => {
@@ -310,4 +319,7 @@ router.post("/edit-profile", isLoggedIn, fileUploader.any(), (req, res) => {
   }
 
 });
+
+// ! COPY CODE FROM BACKUP
+
 module.exports = router;
