@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const Job = require("../models/job.model");
-const isLoggedIn = require("../middleware/isLoggedin");
+const isLoggedIn = require("../middleware/isLoggedIn");
 const isEmployer = require("../middleware/isEmployer");
 const isJobSeeker = require("../middleware/isJobSeeker");
 
