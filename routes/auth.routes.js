@@ -96,34 +96,36 @@ router.post("/signup-jobseeker", fileUploader.any(), (req, res) => {
       });
     });
 });
-
 router.post("/signup-employer", fileUploader.single('addPicture'), (req, res) => {
   const { username, password, email, firstName, lastName, companyName, location } = req.body;
-  console.log(req.file);
+  console.log(req.files);
 
   const usernameNotProvided = !username || username === "";
   const passwordNotProvided = !password || password === "";
   const emailNotProvided = !email || email === "";
   const firstNameNotProvided = !firstName || firstName === "";
+  const companyNameNotProvided = !companyName || companyName === "";
   const lastNameNotProvided = !lastName || lastName === "";
   const locationNotProvided = !location || location === "";
 
   if (
     usernameNotProvided ||
     passwordNotProvided ||
+    companyNameNotProvided ||
     emailNotProvided ||
     firstNameNotProvided ||
     lastNameNotProvided ||
     locationNotProvided
   ) {
-    res.render("auth/signup-form-js", {
+    res.render("auth/signup-form", {
       errorMessage: "Please provide required information",
     });
     return;
   }
 
   let imageUrl = 'https://www.chocolatebayou.org/wp-content/uploads/No-Image-Person-1536x1536.jpeg';
-  if (req.file.fieldname === 'addPicture') {
+  // if (req.file.fieldname === 'addPicture') {
+  if (req.file) {
     imageUrl = req.file.path;
   }
 
@@ -140,12 +142,13 @@ router.post("/signup-employer", fileUploader.single('addPicture'), (req, res) =>
     })
     .then((hashedPassword) => {
       return User.create({
-        accountType: "Job seeker",
+        accountType: "Employer",
         username: username,
         password: hashedPassword,
         email: email,
         firstName: firstName,
         lastName: lastName,
+        companyName: companyName,
         location: location,
         addPicture: imageUrl,
       });
@@ -155,86 +158,11 @@ router.post("/signup-employer", fileUploader.single('addPicture'), (req, res) =>
       res.redirect("/");
     })
     .catch((err) => {
-      res.render("auth/signup-form-js", {
+      res.render("auth/signup-form", {
         errorMessage: err.message || "Error while trying to sign up",
       });
     });
 });
-
-router.post(
-  "/signup-employer",
-  fileUploader.single("addPicture"),
-  (req, res) => {
-    const {
-      username,
-      password,
-      email,
-      firstName,
-      lastName,
-      companyName,
-      location,
-      addPicture,
-      addResume,
-    } = req.body;
-
-    const usernameNotProvided = !username || username === "";
-    const passwordNotProvided = !password || password === "";
-    const emailNotProvided = !email || email === "";
-    const firstNameNotProvided = !firstName || firstName === "";
-    const companyNameNotProvided = !companyName || companyName === "";
-    const lastNameNotProvided = !lastName || lastName === "";
-    const locationNotProvided = !location || location === "";
-
-    if (
-      usernameNotProvided ||
-      passwordNotProvided ||
-      companyNameNotProvided ||
-      emailNotProvided ||
-      firstNameNotProvided ||
-      lastNameNotProvided ||
-      locationNotProvided
-    ) {
-      res.render("auth/signup-form", {
-        errorMessage: "Please provide required information",
-      });
-      return;
-    }
-
-    User.findOne({ username: username })
-      .then((foundUser) => {
-        if (foundUser) {
-          throw new Error("The username is taken");
-        }
-
-        return bcrypt.genSalt(saltRounds);
-      })
-      .then((salt) => {
-        return bcrypt.hash(password, salt);
-      })
-      .then((hashedPassword) => {
-        return User.create({
-          accountType: "Employer",
-          username: username,
-          password: hashedPassword,
-          email: email,
-          firstName: firstName,
-          lastName: lastName,
-          companyName: companyName,
-          location: location,
-          addPicture: addPicture,
-        });
-      })
-      .then((createdUser) => {
-        res.redirect("/");
-      })
-      .catch((err) => {
-        res.render("auth/signup-form", {
-          errorMessage: err.message || "Error while trying to sign up",
-        });
-      });
-  }
-);
-//login
 
 router.get("/login", (req, res) => {
   res.render("auth/login-form");
@@ -280,16 +208,16 @@ router.post("/login", (req, res) => {
   // });
 });
 -
-//logout
-router.get("/logout", isLoggedIn, (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      return res.render("error");
-    }
-    res.redirect("/");
+  //logout
+  router.get("/logout", isLoggedIn, (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        return res.render("error");
+      }
+      res.redirect("/");
+    });
+    console.log(req.session);
   });
-  console.log(req.session);
-});
 
 router.get("/my-profile", isLoggedIn, (req, res) => {
   const user = req.session.user;

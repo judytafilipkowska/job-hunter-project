@@ -14,7 +14,9 @@ const express = require("express");
 const hbs = require("hbs");
 
 const app = express();
-
+//GeoJSON.js
+// https://www.npmjs.com/package/geojson
+var GeoJSON = require('geojson');
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
 require("./config")(app);
 

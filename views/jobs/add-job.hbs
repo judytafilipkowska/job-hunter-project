@@ -1,5 +1,73 @@
+<br />
+<form action="/jobs/add-job" method="POST">
+  <div class="form-floating mb-3" style="width: 25rem;">
+    <input
+      type="text"
+      name="position"
+      class="form-control"
+      id="floatingInput"
+      placeholder="Position"
+    />
+    <label for="username"></label>
+  </div>
+
+  <div class="form-floating mb-3" style="width: 25rem;">
+    <input
+      type="text"
+      name="address"
+      class="form-control"
+      id="floatingInput"
+      placeholder="Location(please provide address and city)"
+    />
+    <label for="firstName"></label>
+  </div>
+  <div class="form-floating mb-3" style="width: 25rem;">
+    <input
+      type="text"
+      name="description"
+      class="form-control"
+      id="floatingInput"
+      placeholder="Description"
+    />
+    <label for="lastName"></label>
+  </div>
+  <div class="form-floating mb-3" style="width: 25rem;">
+    <input
+      type="text"
+      name="companyName"
+      class="form-control"
+      id="floatingInput"
+      placeholder="Company name"
+    />
+    <label for="companyName"></label>
+  </div>
+
+  <div class="form-floating mb-3" style="width: 25rem;">
+    <input
+      type="Number"
+      name="wage"
+      class="form-control"
+      id="floatingInput"
+      placeholder="Salary"
+    />
+    <label for="picture"> </label>
+
+   <br>
+    <input type="radio" id="true" name="remote" value="true" />
+     
+    <label for="true">Remote</label>
+    <input type="radio" id="false" name="remote" value="false" />
+     
+    <label for="false">On-site</label>
+
+  </div>
+
+  <a href="/"><button type="submit" class="btn btn-secondary">Post a Job</button></a>
+</form>
 
 
+
+{{!--
 <form action="/jobs/add-job" method="POST">
   <br />
   <label>Position:</label>
@@ -10,8 +78,8 @@
   <input type="text" name="companyName" />
 
   <br />
-  <label>Location:</label>
-  <input type="text" name="location" />
+  <label>Location(<i>Please provide address and city</i>):</label>
+  <input type="text" name="address" />
 
   <br />
   <label>Wage: </label>
@@ -21,7 +89,7 @@
  
    <br />
   <label>Description: </label>
-  <input type="text" name="description"/>
+  <input type="text" name="description" />
 
    <br/>
  <P>Remote</P>
@@ -34,4 +102,4 @@
   <button type="submit">Add a job</button>
  
 </form>
-
+--}}

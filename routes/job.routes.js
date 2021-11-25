@@ -28,14 +28,14 @@ router.get("/jobs/add-job", isLoggedIn, isEmployer, (req, res) => {
 //POST ADD JOB
 router.post("/jobs/add-job", isLoggedIn, (req, res) => {
   const user = req.session.user;
-  const { position, remote, location, wage, description, companyName } =
+  const { position, remote, address, wage, description, companyName } =
     req.body;
 
   Job.create({
     addedBy: user._id,
     position,
     remote,
-    location,
+    address,
     wage,
     description,
     companyName,
@@ -48,16 +48,19 @@ router.post("/jobs/add-job", isLoggedIn, (req, res) => {
 });
 
 router.get("/jobs/:jobId/details", (req, res) => {
+  // const { user } = req.session;
   const jobId = req.params.jobId;
-  let isJobSeeker = false;
+  // let isJobSeeker = false;
 
-  if (user.accountType === "Job seeker") {
-    isEmployer = true;
-  }
+  // console.log(user);
+
+  // if (user.accountType === "Job seeker") {
+  //   isEmployer = true;
+  // }
 
   Job.findById(jobId)
     .then((job) => {
-      res.render("jobs/job-detail", isJobSeeker, { job: job });
+      res.render("jobs/job-detail", { job });
     })
     .catch((err) => console.log(err));
 });
@@ -81,13 +84,13 @@ router.post("/jobs/:jobId/edit-job", (req, res) => {
     addedBy,
     position,
     remote,
-    location,
+    address,
     wage,
     description,
     companyName,
   } = req.body;
   Job.findByIdAndUpdate(
-    { addedBy, position, remote, location, wage, description, companyName },
+    { addedBy, position, remote, address, wage, description, companyName },
     { new: true }
   )
 
@@ -96,5 +99,14 @@ router.post("/jobs/:jobId/edit-job", (req, res) => {
     })
     .catch((err) => console.log(err));
 });
+
+
+router.get("/jobs/display-all", (req, res) => {
+  Job.find()
+      .then((allJobs) => {
+          res.json(allJobs)
+
+      })
+})
 
 module.exports = router;
