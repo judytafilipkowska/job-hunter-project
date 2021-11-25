@@ -110,83 +110,6 @@ router.post(
       lastName,
       companyName,
       location,
-    } = req.body;
-    console.log(req.file);
-
-    const usernameNotProvided = !username || username === "";
-    const passwordNotProvided = !password || password === "";
-    const emailNotProvided = !email || email === "";
-    const firstNameNotProvided = !firstName || firstName === "";
-    const lastNameNotProvided = !lastName || lastName === "";
-    const locationNotProvided = !location || location === "";
-
-    if (
-      usernameNotProvided ||
-      passwordNotProvided ||
-      emailNotProvided ||
-      firstNameNotProvided ||
-      lastNameNotProvided ||
-      locationNotProvided
-    ) {
-      res.render("auth/signup-form-js", {
-        errorMessage: "Please provide required information",
-      });
-      return;
-    }
-
-    let imageUrl =
-      "https://www.chocolatebayou.org/wp-content/uploads/No-Image-Person-1536x1536.jpeg";
-    if (req.file.fieldname === "addPicture") {
-      imageUrl = req.file.path;
-    }
-
-    User.findOne({ username: username })
-      .then((foundUser) => {
-        if (foundUser) {
-          throw new Error("The username is taken");
-        }
-
-        return bcrypt.genSalt(saltRounds);
-      })
-      .then((salt) => {
-        return bcrypt.hash(password, salt);
-      })
-      .then((hashedPassword) => {
-        return User.create({
-          accountType: "Job seeker",
-          username: username,
-          password: hashedPassword,
-          email: email,
-          firstName: firstName,
-          lastName: lastName,
-          location: location,
-          addPicture: imageUrl,
-        });
-      })
-      .then((createdUser) => {
-        console.log(createdUser);
-        res.redirect("/");
-      })
-      .catch((err) => {
-        res.render("auth/signup-form-js", {
-          errorMessage: err.message || "Error while trying to sign up",
-        });
-      });
-  }
-);
-
-router.post(
-  "/signup-employer",
-  fileUploader.single("addPicture"),
-  (req, res) => {
-    const {
-      username,
-      password,
-      email,
-      firstName,
-      lastName,
-      companyName,
-      location,
       addPicture,
       addResume,
     } = req.body;
@@ -322,7 +245,7 @@ router.get("/my-profile", isLoggedIn, (req, res) => {
 
 router.get("/application-success", isLoggedIn, (req, res) => {
   res.render("profile/applied", {
-    message: "Thank you!, your application is on the way",
+    message: "Thank you! your application is on the way",
   });
 });
 

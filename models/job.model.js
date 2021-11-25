@@ -3,6 +3,7 @@ const { Schema, model } = require("mongoose");
 const jobSchema = new Schema(
   {
     addedBy: { type: Schema.Types.ObjectId, ref: "User" },
+    appliedBy: [{ type: Schema.Types.ObjectId, ref: "User" }],
     position: { type: String, required: true },
     remote: { type: Boolean, required: true },
     location: { type: String, required: true },

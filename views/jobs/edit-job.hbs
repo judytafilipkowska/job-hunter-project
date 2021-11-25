@@ -1,37 +1,69 @@
+<form action="/jobs/edit-job" method="POST">
+  <div class="form-floating mb-3" style="width: 25rem;">
+    <input
+      type="text"
+      name="position"
+      class="form-control"
+      id="floatingInput"
+      placeholder="Position"
+    />
+    <label for="username"></label>
+  </div>
 
+  <div class="form-floating mb-3" style="width: 25rem;">
+    <input
+      type="text"
+      name="location"
+      class="form-control"
+      id="floatingInput"
+      placeholder="Location"
+    />
+    <label for="firstName"></label>
+  </div>
+  <div class="form-floating mb-3" style="width: 25rem;">
+    <input
+      type="text"
+      name="description"
+      class="form-control"
+      id="floatingInput"
+      placeholder="Description"
+    />
+    <label for="lastName"></label>
+  </div>
+  <div class="form-floating mb-3" style="width: 25rem;">
+    <input
+      type="text"
+      name="companyName"
+      class="form-control"
+      id="floatingInput"
+      placeholder="Company name"
+    />
+    <label for="companyName"></label>
+  </div>
 
-<form action="/jobs/add-job" method="POST">
-  <br />
-  <label>Position:</label>
-  <input type="text" name="position" value="{{editedJob.position}}"/>
-  <br/>
+  <div class="form-floating mb-3" style="width: 25rem;">
+    <input
+      type="Number"
+      name="wage"
+      class="form-control"
+      id="floatingInput"
+      placeholder="Salary"
+    />
+    <label for="picture"> </label>
 
-  <label>Company name :</label>
-  <input type="text" name="companyName" />
+    <P>Remote</P>
+    <input type="radio" id="true" name="remote" value="true" />
+     
+    <label for="true">true</label>
+    <input type="radio" id="false" name="remote" value="false" />
+     
+    <label for="false">false</label>
 
-  <br />
-  <label>Location:</label>
-  <input type="text" name="location" />
+  </div>
 
-  <br />
-  <label>Wage: </label>
-  <input type="number" name="wage" />
+  <a href="/"><button
+      type="submit"
+      class="btn btn-secondary"
+    >Submit</button></a>
 
-  <br />
- 
-   <br />
-  <label>Description: </label>
-  <input type="text" name="description"/>
-
-   <br/>
- <P>Remote</P>
- <input type="radio" id="true" name="remote" value="true">
-  <label for="true">true</label>
- <input type="radio" id="false" name="remote" value="false">
-  <label for="false">false</label>
-
-  <br />
-  <button type="submit">Add a job</button>
- 
 </form>
-
