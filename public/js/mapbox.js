@@ -26,6 +26,7 @@ const main = () => {
       (position) => {
         var pos = [position.coords.longitude, position.coords.latitude];
         map.setCenter(pos);
+
       },
       () => alert("Issue retrieving your location")
     );
@@ -43,6 +44,12 @@ const main = () => {
       allJobs.forEach((job) => {
         new mapboxgl.Marker()
           .setLngLat(job.location.coordinates) 
+          .setPopup(
+            new mapboxgl.Popup({ offset: 25 }) // add popups
+              .setHTML(
+                job.position
+              )
+          )
           .addTo(map);
       });
     })
