@@ -5,7 +5,7 @@ const fileUploader = require("../config/cloudinary.config");
 
 const isLoggedIn = require("./../middleware/isLoggedIn");
 const isEmployer = require("./../middleware/isEmployer");
-const isJobseeker = require("./../middleware/isJobseeker");
+// const isJobseeker = require("./../middleware/isJobseeker");
 
 const saltRounds = 10;
 
