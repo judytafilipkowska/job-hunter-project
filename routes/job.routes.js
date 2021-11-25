@@ -78,6 +78,8 @@ router.get("/jobs/:jobId/details", (req, res) => {
       res.render("jobs/job-detail", { job , amIJobSeeker});
     })
     .catch((err) => console.log(err));
+
+    // ljvnw
 });
 
 //GET EDIT JOB
