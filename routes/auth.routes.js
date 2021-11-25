@@ -23,7 +23,7 @@ router.get("/signup-employer", (req, res) => {
 
 router.post("/signup-jobseeker", fileUploader.any(), (req, res) => {
   const { username, password, email, firstName, lastName, location } = req.body;
-  console.log(req.files.length);
+  console.log(req.files);
   // removed accountType
   // const accountTypeNotProvided = !accountType || accountType === "" ;
   const usernameNotProvided = !username || username === "";
@@ -59,8 +59,6 @@ router.post("/signup-jobseeker", fileUploader.any(), (req, res) => {
       resumeUrl = req.files[1].path;
     }
   }
-
-
 
 
   User.findOne({ username: username })

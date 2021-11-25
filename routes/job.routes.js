@@ -60,19 +60,22 @@ router.post("/jobs/add-job", isLoggedIn, (req, res) => {
 });
 
 router.get("/jobs/:jobId/details", (req, res) => {
-  // const { user } = req.session;
   const jobId = req.params.jobId;
-  // let isJobSeeker = false;
+  let amIJobSeeker = false;
+  
+  if(req.session){
+    const { user } = req.session;
+    console.log(user);
+    if (user.accountType === "Job seeker") {
+      amIJobSeeker = true;
+    }
 
-  // console.log(user);
-
-  // if (user.accountType === "Job seeker") {
-  //   isEmployer = true;
-  // }
+  }
+  
 
   Job.findById(jobId)
     .then((job) => {
-      res.render("jobs/job-detail", { job });
+      res.render("jobs/job-detail", { job , amIJobSeeker});
     })
     .catch((err) => console.log(err));
 });

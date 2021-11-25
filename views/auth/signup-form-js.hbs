@@ -9,6 +9,7 @@
 <body>
 
 <main>
+
 <form id="form" action="/signup-jobseeker" method="POST" enctype="multipart/form-data">
    
  <div class="form-floating mb-3">
@@ -36,12 +37,12 @@
   <label for="location" >Location</label>
 </div>
 <div class="mb-3">
-  <label for="formFile"  name="addPicture"  class="form-label">Add picture</label>
-  <input class="form-control" type="file" id="formFile">
+  <label for="formFile"  class="form-label">Add picture</label>
+  <input class="form-control" type="file" id="formFile" name="addPicture">
 </div>
 <div class="mb-3">
-  <label for="formFile"  name="addResume"  class="form-label">Add resume</label>
-  <input class="form-control" type="file" id="formFile">
+  <label for="formFile"    class="form-label">Add resume</label>
+  <input class="form-control" type="file" id="formFile" name="addResume">
 </div>
   
  <button type="submit" class="btn btn-outline-secondary">Sign up</button>
