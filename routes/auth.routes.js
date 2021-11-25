@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const fileUploader = require("../config/cloudinary.config");
 
 const isLoggedIn = require("../middleware/isLoggedIn");
+
 // const isEmployer = require("./../middleware/isEmployer");
 // const isJobseeker = require("./../middleware/isJobseeker");
 
@@ -149,7 +150,6 @@ router.post("/signup-employer", fileUploader.single('addPicture'), (req, res) =>
         companyName: companyName,
         location: location,
         addPicture: imageUrl,
-        addResume: resumeUrl,
       });
     })
     .then((createdUser) => {
