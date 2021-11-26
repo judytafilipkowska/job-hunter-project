@@ -1,4 +1,4 @@
-<hbs lang="en">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +9,24 @@
 <body>
 
     <main>
-
+      <div class="container" style="padding-top: 50px;">
+  <div class="row">
+    <div class="col">
+      <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel" style="height: 400px;">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="/images/log1.jpg" class="d-block w-100" style="height: 400px;" alt="img">
+          </div>
+          <div class="carousel-item">
+            <img src="/images/log2.jpg" class="d-block w-100" style="height: 400px;" alt="img">
+          </div>
+          <div class="carousel-item">
+            <img src="/images/log3.jpg" class="d-block w-100" style="height: 400px;" alt="img">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
       <form id="form" action="/login" method="POST">
         <br />
         <div class="form-floating mb-3" style="width: 25rem;">
@@ -33,11 +50,14 @@
           <label for="password">Password</label>
         </div>
         <button type="submit" class="btn btn-secondary">Log in</button>
-
+ </form>
+    </div>
+  </div>
+     
         {{#if errorMessage}}
           <div class="error-message">{{errorMessage}}</div>
         {{/if}}
-      </form>
+     
     </main>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
@@ -46,4 +66,4 @@
     ></script>
   </body>
 
-</hbs>
+</html>

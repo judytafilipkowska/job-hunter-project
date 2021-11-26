@@ -6,7 +6,7 @@ const fileUploader = require("../config/cloudinary.config");
 const isLoggedIn = require("../middleware/isLoggedIn");
 
 // const isEmployer = require("./../middleware/isEmployer");
-// const isJobseeker = require("./../middleware/isJobseeker");
+const isJobSeeker = require("../middleware/isJobSeeker");
 
 const saltRounds = 10;
 
@@ -150,6 +150,7 @@ router.post("/signup-employer", fileUploader.single('addPicture'), (req, res) =>
         companyName: companyName,
         location: location,
         addPicture: imageUrl,
+        //jobsIApplied
       });
     })
     .then((createdUser) => {
@@ -198,7 +199,7 @@ router.post("/login", (req, res) => {
 
       } else if (passwordCorrect) {
         req.session.user = user;
-        res.redirect("/")
+        res.redirect("/my-profile")
       }
     })
     .catch((err) => {
@@ -221,8 +222,7 @@ router.post("/login", (req, res) => {
   });
 
 router.get("/my-profile", isLoggedIn, (req, res) => {
-  const user = req.session.user;
-
+  const {user} = req.session;
   let isEmployer = false;
 
   if (user.accountType === "Employer") {
@@ -233,11 +233,40 @@ router.get("/my-profile", isLoggedIn, (req, res) => {
   res.render("profile/my-profile", { user, isEmployer });
 });
 
-router.get("/application-success", isLoggedIn, (req, res) => {
-  res.render("profile/applied", {
-    message: "Thank you! your application is on the way",
-  });
+router.get("/application-success/:jobId", isLoggedIn, isJobSeeker, (req, res) => {
+    const jobId = req.params.jobId;
+    const { user } = req.session;
+    User.findByIdAndUpdate(user._id, { $push: { jobsIApplied: jobId } }).then(
+      (updatedUser) => {
+        res.render("profile/applied", {
+          message: "Thank you! your application is on the way",
+        });
+      }
+    );
+  }
+);
+
+router.get("/applied-jobs", isLoggedIn, isJobSeeker, (req, res) => {
+  const {user} = req.session;
+  User.findById(user)
+    .populate("jobsIApplied")
+    .then((foundedUser) => {
+      console.log("user", foundedUser);
+      const appliedJobs = foundedUser.jobsIApplied;
+      res.render("jobs/applied-jobs", { appliedJobs });
+    });
 });
+
+router.get("/edit-profile", isLoggedIn, (req, res) => {
+  const user = req.session.user;
+
+  let isEmployer = false;
+  if (user.accountType === "Employer") {
+    isEmployer = true;
+  }
+  res.render("profile/edit", { user, isEmployer });
+}
+);
 
 router.get("/edit-profile", isLoggedIn, (req, res) => {
   const user = req.session.user;
@@ -318,6 +347,6 @@ router.post("/edit-profile", isLoggedIn, fileUploader.any(), (req, res) => {
 
 });
 
-// ! COPY CODE FROM BACKUP
+
 
 module.exports = router;

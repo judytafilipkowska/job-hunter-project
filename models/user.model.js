@@ -11,9 +11,8 @@ const userSchema = new Schema(
     companyName: {type: String}, 
     location: {type: String, required: true},
     addPicture: String,
-    addResume: String
-    // addPicture: {data: Buffer},
-    // addResume: {data: Buffer}
+    addResume: String,
+    jobsIApplied: [{ type: Schema.Types.ObjectId, ref: "Job" }],
      },
   {
     timestamps: true,

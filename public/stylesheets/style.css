@@ -11,7 +11,9 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
  
 }
-
+main {
+  padding-top: 60px;
+}
 
 .navbar  {
   height:100px;

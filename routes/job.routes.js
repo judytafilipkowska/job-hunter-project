@@ -59,20 +59,15 @@ router.post("/jobs/add-job", isLoggedIn, (req, res) => {
     .catch((err) => console.log(err));
 });
 
-router.get("/jobs/:jobId/details", (req, res) => {
+router.get("/jobs/:jobId/details", isLoggedIn, (req, res) => {
+  const {user} = req.session;
   const jobId = req.params.jobId;
   let amIJobSeeker = false;
   
-  if(req.session){
-    const { user } = req.session;
-    console.log(user);
     if (user.accountType === "Job seeker") {
       amIJobSeeker = true;
     }
-
-  }
   
-
   Job.findById(jobId)
     .then((job) => {
       res.render("jobs/job-detail", { job , amIJobSeeker});
@@ -125,5 +120,34 @@ router.get("/jobs/display-all", (req, res) => {
 
       })
 })
+
+
+router.get("/search", (req, res) => {
+  const jobPosition = req.query.jobPosition; 
+  console.log(jobPosition);
+  Job.find({position: { $regex: `${jobPosition}`, $options: "i" } })
+    .then((jobList) => {  
+      console.log(jobList)
+      res.render('jobs/job-list-view', { jobList })
+    })
+    .catch( (err) => console.log(err));
+
+});
+
+router.post("/jobs/:jobId/delete", (req, res) => {
+  const jobId = req.params.jobId;
+  console.log(jobId);
+  Job.findByIdAndRemove(jobId)
+    .then((status => {
+      res.redirect("/jobs/job-panel")
+    }))
+    .catch((err => {
+      res.render("profile/edit", {
+        errorMessage: err.message || "Error while trying to edit",
+      })
+    })
+    ) 
+  });
+
 
 module.exports = router;

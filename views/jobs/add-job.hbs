@@ -1,5 +1,34 @@
-<br />
-<form action="/jobs/add-job" method="POST">
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>  
+<main>
+  <br>
+<div class="container" style="padding-top: 50px;">
+  <div class="row">
+    <div class="col">
+      <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="/images/add1.jpg" class="d-block w-100" style="height: 480px;" alt="img">
+          </div>
+          <div class="carousel-item">
+            <img src="/images/add2.jpg" class="d-block w-100"style="height: 480px;" alt="img">
+          </div>
+          <div class="carousel-item">
+            <img src="/images/add3.jpg" class="d-block w-100" style="height: 480px;" alt="img">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+  <form action="/jobs/add-job" method="POST">
   <div class="form-floating mb-3" style="width: 25rem;">
     <input
       type="text"
@@ -65,69 +94,18 @@
   <a href="/"><button type="submit" class="btn btn-secondary">Post a Job</button></a>
 </form>
 
+{{! error message display: }}
 
-
-{{!--
-<form action="/jobs/add-job" method="POST">
-  <br />
-  <label>Position:</label>
-  <input type="text" name="position" />
-  <br/>
-
-  <label>Company name :</label>
-  <input type="text" name="companyName" />
-
-  <br />
-  <label>Location(<i>Please provide address and city</i>):</label>
-  <input type="text" name="address" />
-
-  <div class="form-floating mb-3" style="width: 25rem;">
-    <input
-      type="text"
-      name="location"
-      class="form-control"
-      id="floatingInput"
-      placeholder="Location"
-    />
-    <label for="firstName"></label>
-  </div>
-  <div class="form-floating mb-3" style="width: 25rem;">
-    <input
-      type="text"
-      name="description"
-      class="form-control"
-      id="floatingInput"
-      placeholder="Description"
-    />
-    <label for="lastName"></label>
-  </div>
-  <div class="form-floating mb-3" style="width: 25rem;">
-    <input
-      type="text"
-      name="companyName"
-      class="form-control"
-      id="floatingInput"
-      placeholder="Company name"
-    />
-    <label for="companyName"></label>
+{{#if errorMessage}}
+  <div class="error-message">{{errorMessage}}</div>
+{{/if}}
+    </div>
   </div>
 
-  <br />
+</main>
  
-   <br />
-  <label>Description: </label>
-  <input type="text" name="description" />
+</body>
+</html>
+  
 
-    <P>Remote</P>
-    <input type="radio" id="true" name="remote" value="true" />
-     
-    <label for="true">true</label>
-    <input type="radio" id="false" name="remote" value="false" />
-     
-    <label for="false">false</label>
 
-  <br />
-  <button type="submit">Add a job</button>
- 
-</form>
---}}

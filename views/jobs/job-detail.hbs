@@ -1,10 +1,13 @@
-<div class="job-detail" >
-<br>
+<div class="job-detail" style="padding-top: 130px;" >
+
 Position: {{job.position}}
+
+{{#if job.remote}}
 <hr />
-Remote
+Remote 
+{{/if}}
 <hr />
-Location: {{job.location}}
+Location: {{job.address}}
 <hr />
 <Salary: {{job.wage}}€
 <hr>

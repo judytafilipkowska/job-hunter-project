@@ -1,6 +1,6 @@
-{{!-- Job seeker profile: About section with profile pic, another for resume, applied jobs if we can manage--}}
-<!DOCTYPE hbs>
-<hbs lang="en">
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,82 +10,85 @@
 </head>
 <body>
 <main>
-
-<div class="container">
+<br>
+<div class="container" style="padding-top: 50px;" >
   <div class="row">
     <div class="col">
-     {{#if isEmployer}}
-<div class="card" style="width: 25rem;">
-   <div class="card-header">
-    About
-  </div>
-  <img src= {{user.addPicture}} alt="profile-pic" />
-  <div class="card-body">
-    <h5 class="card-text">{{user.firstName}} {{user.lastName}}</h5>
-    <h6 class="card-text">{{user.companyName}}</h6>
-    <p>{{user.location}}</p>
+      <div class="container">
+        <div class="row">
+          <div class="col">
+           {{#if isEmployer}}
+            <div class="card" style="width: 25rem;">
+              <div class="card-header">
+              About
+              </div>
+              <img src= {{user.addPicture}} alt="profile-pic" />
+              <div class="card-body">
+                <h5 class="card-text">{{user.firstName}} {{user.lastName}}</h5>
+                <h6 class="card-text">{{user.companyName}}</h6>
+                <p>{{user.location}}</p>
    
-  </div>
-</div>
+              </div>
+            </div>
 
 
-{{else}}
+           {{else}}
 
-<div class="card" style="width: 25rem;">
-    <div class="card-header">
-    About
-  </div>
-  <img src= {{user.addPicture}} alt="profile-pic" />
-  <div class="card-body">
-    <h5 class="card-text">{{user.firstName}} {{user.lastName}}</h5>
-    <p>{{user.location}}</p>
-  </div>
-</div>
+            <div class="card" style="width: 25rem;">
+              <div class="card-header">
+              <h5>About</h5>
+              </div>
+               <img src= {{user.addPicture}} alt="profile-pic" />
+              <div class="card-body">
+                <h5 class="card-text">{{user.firstName}} {{user.lastName}}</h5>
+                <p>{{user.location}}</p>
+              </div>
+            </div>
 
-{{!--
-<img src= {{user.addPicture}} alt="profile-pic" />
-<p>{{user.firstName}} {{user.lastName}}</p>
-<p>{{user.location}}</p>--}}
-
-{{/if}}
-
-    </div>
+           {{/if}}
+          </div>
+        </div>
+      </div>
+    </div> 
     <div class="col">
-
-<div class="card" style="width: 25rem;">
-  <div class="card-header">
-    Details
-  </div>
-  <ul class="list-group list-group-flush">
-      {{#if isEmployer}}
-    <li class="list-group-item">My username:{{user.username}}</li>
-    <li class="list-group-item">E-mail:{{user.email}}</li>
-      {{else}}
-    <li class="list-group-item">My username:{{user.username}}</li>
-    <li class="list-group-item">E-mail:{{user.email}}</li> 
-    <li class="list-group-item"> <a href="{{user.addResume}}" target="_blank"> Check the resume</a> </li> 
-    {{/if}}
-  </ul>
-</div>
- <br>
+      <div class="col">
+        <div class="card" style="width: 25rem;">
+          <div class="card-header">
+            <h5>Details</h5>
+          </div>
+            <ul class="list-group list-group-flush">
+            {{#if isEmployer}}
+              <li class="list-group-item">My username: {{user.username}}</li>
+              <li class="list-group-item">E-mail: {{user.email}}</li>
+              {{else}}
+              <li class="list-group-item">My username: {{user.username}}</li>
+              <li class="list-group-item">E-mail: {{user.email}}</li> 
+              <li class="list-group-item"> <a class="nav-link" href="{{user.addResume}}" target="_blank">Check the resume</a> </li> 
+            {{/if}}
+            </ul>
+          </div>
+          <br>
    
-<div class="card" style="width: 25rem;">
-  <div class="card-header">
-    Shortcuts
-  </div>
-  {{#if isEmployer}}
-  <p><a class="nav-link" href="jobs/job-panel">Access your job panel</a></p>
-  <p><a class="nav-link" href="/jobs/add-job">Quick add</a></p>
-   {{/if}}
-  <p><a class="nav-link" href="/edit-profile">Edit profile</a></p> 
-  <p><a class="nav-link" href="/logout"> Logout</a></p>
-</div>
-   
+          <div class="card" style="width: 25rem;">
+            <div class="card-header">
+              <h5>Shortcuts</h5>
+            </div>
+            {{#if isEmployer}}
+              <p><a class="nav-link" href="jobs/job-panel">Access your job panel</a></p>
+              <p><a class="nav-link" href="/jobs/add-job">Quick add</a></p>
+              <p><a class="nav-link" href="/edit-profile">Edit profile</a></p> 
+              <p><a class="nav-link" href="/logout"> Logout</a></p>
+              {{else}}
+              <p><a class="nav-link" href="jobs/applied-jobs">Applied jobs</a></p>
+              <p><a class="nav-link" href="/edit-profile">Edit profile</a></p> 
+              <p><a class="nav-link" href="/logout"> Logout</a></p>
+            {{/if}}
+          </div>
+      </div>
     </div>
   </div>
-  
-
+</div>
 </main>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
 </body>
-</hbs>
+</html>

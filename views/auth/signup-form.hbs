@@ -1,5 +1,5 @@
-<!DOCTYPE hbs>
-<hbs lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,44 +10,63 @@
 <body>
 
 <main>
-<form id="form" action="/signup-employer" method="POST" enctype="multipart/form-data">
-
-<br>
-<div class="form-floating mb-3"style="width: 25rem;">
+  <div class="container" style="padding-top: 50px;">
+  <div class="row">
+    <div class="col">
+      <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="/images/emp1.jpg" class="d-block w-100" style="height: 480px;" alt="img">
+          </div>
+          <div class="carousel-item">
+            <img src="/images/emp2.jpg" class="d-block w-100" style="height: 480px;" alt="img">
+          </div>
+          <div class="carousel-item">
+            <img src="/images/emp3.jpg" class="d-block w-100" style="height: 480px;" alt="img">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col" style="height: 480px; overflow: auto;">
+    <form id="form" action="/signup-employer" method="POST" enctype="multipart/form-data">
+<div class="form-floating mb-3">
   <input type="text"  name="username" class="form-control" id="floatingInput" placeholder="username">
-  <label for="username" >Username</label>
+  <label for="username" >Username*</label>
 </div>
-<div class="form-floating mb-3"style="width: 25rem;">
+<div class="form-floating mb-3">
   <input type="email" name="email" class="form-control" id="floatingInput" placeholder="email">
-  <label for="email" >E-mail</label>
+  <label for="email" >E-mail*</label>
 </div>
-<div class="form-floating mb-3"style="width: 25rem;">
+<div class="form-floating mb-3">
   <input type="password" name="password" class="form-control" id="floatingInput" placeholder="password">
-  <label for="password" >Password</label>
+  <label for="password" >Password*</label>
 </div>
-<div class="form-floating mb-3"style="width: 25rem;">
+<div class="form-floating mb-3">
   <input type="text" name="firstName" class="form-control" id="floatingInput" placeholder="firstName">
-  <label for="firstName" >First name</label>
+  <label for="firstName" >First name*</label>
 </div>
-<div class="form-floating mb-3"style="width: 25rem;">
+<div class="form-floating mb-3">
   <input type="text" name="lastName" class="form-control" id="floatingInput" placeholder="lastName">
-  <label for="lastName">Last name</label>
+  <label for="lastName">Last name*</label>
 </div>
-<div class="form-floating mb-3"style="width: 25rem;">
+<div class="form-floating mb-3">
   <input type="text" name="companyName" class="form-control" id="floatingInput" placeholder="companyName">
   <label for="companyName">Company name</label>
 </div>
-<div class="form-floating mb-3">
+<div class="form-floating mb-3" >
   <input type="text" name="location" class="form-control" id="floatingInput" placeholder="companyName">
-  <label for="location">Location</label>
+  <label for="location">Location*</label>
 </div>
-<div class="mb-3">
+<div class="mb-3" >
   <label for="formFile"  name="addPicture"  class="form-label">Add picture</label>
   <input class="form-control" type="file" id="formFile" name="addPicture">
 </div>
 <br>
 <button type="submit" class="btn btn-secondary">Sign up!</button>
 </form>
+
+    </div>
+  </div>
 
 {{! error message display: }}
 
@@ -57,4 +76,4 @@
 </main>
  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> 
 </body>
-</hbs>
+</html>
