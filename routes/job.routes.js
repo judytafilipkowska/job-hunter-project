@@ -83,7 +83,7 @@ router.get("/jobs/:jobId/edit-job", (req, res) => {
 
   Job.findById(jobId)
     .then((job) => {
-      console.log(job);
+      console.log("here ",job);
       res.render("jobs/edit-job", { editedJob: job });
     })
     .catch((err) => console.log(err));
@@ -91,7 +91,8 @@ router.get("/jobs/:jobId/edit-job", (req, res) => {
 
 //POST EDIT JOB
 router.post("/jobs/:jobId/edit-job", (req, res) => {
-  const jobId = req.params.jobId;
+  const jobId = req.params.jobId
+
   const {
     addedBy,
     position,
@@ -101,13 +102,17 @@ router.post("/jobs/:jobId/edit-job", (req, res) => {
     description,
     companyName,
   } = req.body;
+
   Job.findByIdAndUpdate(
+    jobId,
     { addedBy, position, remote, address, wage, description, companyName },
     { new: true }
   )
 
     .then((updatedJob) => {
-      res.redirect(`/jobs/details-job/${jobId}`);
+      console.log("job has been updated", updatedJob)
+
+      res.redirect("/jobs/job-panel");
     })
     .catch((err) => console.log(err));
 });

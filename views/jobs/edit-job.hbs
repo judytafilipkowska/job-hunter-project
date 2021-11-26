@@ -9,6 +9,7 @@
 <body>
   <main>
   <br>
+
 <div class="container" style="padding-top: 50px;">
   <div class="row">
     <div class="col">
@@ -28,14 +29,14 @@
     </div>
     <div class="col">
   
-<form action="/jobs/edit-job" method="POST">
+<form action="/jobs/{{editedJob._id}}/edit-job" method="post">
   <div class="form-floating mb-3" style="width: 25rem;">
     <input
       type="text"
       name="position"
       class="form-control"
       id="floatingInput"
-      placeholder="Position"
+      value="{{editedJob.position}}" 
     />
     <label for="username"></label>
   </div>
@@ -43,10 +44,10 @@
   <div class="form-floating mb-3" style="width: 25rem;">
     <input
       type="text"
-      name="location"
+      name="address"
       class="form-control"
       id="floatingInput"
-      placeholder="Location"
+      value="{{editedJob.address}}" 
     />
     <label for="firstName"></label>
   </div>
@@ -56,7 +57,7 @@
       name="description"
       class="form-control"
       id="floatingInput"
-      placeholder="Description"
+        value="{{editedJob.description}}" 
     />
     <label for="lastName"></label>
   </div>
@@ -66,7 +67,7 @@
       name="companyName"
       class="form-control"
       id="floatingInput"
-      placeholder="Company name"
+      value="{{editedJob.companyName}}" 
     />
     <label for="companyName"></label>
   </div>
@@ -77,7 +78,7 @@
       name="wage"
       class="form-control"
       id="floatingInput"
-      placeholder="Salary"
+      value="{{editedJob.wage}}" 
     />
     <label for="picture"> </label>
 
@@ -91,10 +92,12 @@
 
   </div>
 
-  <a href="/"><button
+ 
+  <button
       type="submit"
       class="btn btn-secondary"
-    >Submit</button></a>
+    >Submit</button>
+
 
 </form>
 </div>
