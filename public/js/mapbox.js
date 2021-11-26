@@ -37,7 +37,7 @@ const main = () => {
   // Make an HTTP GET request back to our server from the view to get the list of all the restaurants
   // We use axios to make the HTTP request, but this can be done with `fetch()` as well
   axios
-    // .get("http://localhost:9999/jobs/display-all")
+   // .get("http://localhost:9999/jobs/display-all")
     .get("https://jobhunterbyjandm.herokuapp.com/jobs/display-all")
     .then((response) => {
 
