@@ -50,13 +50,14 @@
           <label for="password">Password</label>
         </div>
         <button type="submit" class="btn btn-secondary">Log in</button>
+
+        {{#if errorMessage}}
+          <div class="error-message">{{errorMessage}}</div>
+        {{/if}}
  </form>
     </div>
   </div>
      
-        {{#if errorMessage}}
-          <div class="error-message">{{errorMessage}}</div>
-        {{/if}}
      
     </main>
     <script
