@@ -2,11 +2,19 @@
 <div class="container" style="padding-top: 120px;">
   <div class="row">
     <div class="col" style="height:400px; overflow: auto;">
-        <div class="card">
-      {{#each appliedJobs}}
-      <p>Applied: {{position}}</p>
-{{/each}}
-    </div>
+         <div class="card" style="width: 25rem;">
+          <div class="card-header">
+            <h5>My jobs</h5>
+          </div>
+          <div class="card-body">
+           {{#each appliedJobs}}
+          <p>Applied: {{this.position}}</p>
+          <a href="/jobs/{{this._id}}/details" class="btn btn-secondary">Check me!</a>
+          <hr />
+          {{/each}}
+          </div>
+            </ul>
+          </div>  
     </div>
     <div class="col">
         <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel" style="height: 400px;">
@@ -16,3 +24,4 @@
     </div>
   </div>
  </div> 
+
