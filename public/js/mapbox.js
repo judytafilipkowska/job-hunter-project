@@ -40,9 +40,10 @@ const main = () => {
     // .get("http://localhost:9999/jobs/display-all")
     .get("https://jobhunterbyjandm.herokuapp.com/jobs/display-all")
     .then((response) => {
+
     const allJobs = response.data;
-    console.log(allJobs);
       allJobs.forEach((job) => {
+        console.log(job)
         new mapboxgl.Marker()
           .setLngLat(job.location.coordinates) 
           .setPopup(

@@ -119,6 +119,7 @@ router.post("/jobs/:jobId/edit-job", (req, res) => {
 
 
 router.get("/jobs/display-all", (req, res) => {
+  
   Job.find()
       .then((allJobs) => {
           res.json(allJobs)
